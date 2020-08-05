@@ -1,9 +1,7 @@
 const taskReducer = (state = {}, action) => {
   switch (action.type) {
-    case "SET_USER":
+    case "SET_ALL_TASK_LISTS":
       return action.payload;
-    case "UNSET_USER":
-      return {};
     default:
       return state;
   }

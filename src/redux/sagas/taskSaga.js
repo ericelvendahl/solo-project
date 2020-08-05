@@ -8,7 +8,7 @@ function* taskSaga() {
 function* fetchAllTaskLists(action) {
   console.log("in fetchAllTaskLists saga");
   try {
-    const response = yield axios.get("/api/task" + action.payload);
+    const response = yield axios.get("/api/task/list/" + action.payload);
 
     // now that the session has given us a user object
     // with an id and username set the client-side user object to let
