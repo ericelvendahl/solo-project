@@ -11,6 +11,8 @@ class UserPage extends Component {
         <h1 id="welcome">Welcome, {this.props.user.username}!</h1>
         <p>Your ID is: {this.props.user.id}</p>
         <LogOutButton className="log-in" />
+        <p>Your task lists are:</p>
+        <p>User data is {JSON.stringify(this.props.user)}</p>
       </div>
     );
   }
