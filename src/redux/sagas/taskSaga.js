@@ -4,8 +4,19 @@ import { put, takeLatest } from "redux-saga/effects";
 function* taskSaga() {
   yield takeLatest("FETCH_ALL_TASK_LISTS", fetchAllTaskLists);
   yield takeLatest("FETCH_LIST_BY_ID", fetchListByID);
+  yield takeLatest("ADD_TASK", addTask);
 } // end taskSaga
 
+function* addTask(action){
+  console.log("in addTask saga");
+  try{
+    yield axios.post("/api/task/add/", action.payload);
+  }catch(error){
+    console.log("Add task POST failed in saga with error:", error);
+  }
+}
+
+// fetches all tasks lists for a certain user
 function* fetchAllTaskLists(action) {
   console.log("in fetchAllTaskLists saga");
   try {
@@ -16,6 +27,7 @@ function* fetchAllTaskLists(action) {
   }
 } // end fetchAllTaskLists
 
+// fetches one task list by its ID
 function* fetchListByID(action) {
   console.log("in taskSaga fetchListByID. action.payload is", action.payload);
   try {

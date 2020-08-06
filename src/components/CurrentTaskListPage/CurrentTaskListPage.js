@@ -18,9 +18,10 @@ class CurrentTaskListPage extends Component {
       payload: {
         name: this.state.taskName,
         description: this.state.taskDescription,
+        currentTaskList: this.props.currentTaskList,
       },
     });
-  };
+  }; // end addClicked
 
   handleInputChangeFor = (propertyName) => (event) => {
     this.setState({
