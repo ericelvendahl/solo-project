@@ -25,6 +25,10 @@ class CurrentTaskListPage extends Component {
       type: "FETCH_LIST_BY_ID",
       payload: this.props.currentTaskList[0].task_list_id,
     });
+    this.setState({
+      taskName: "",
+      taskDescription: "",
+    });
   }; // end addClicked
 
   handleInputChangeFor = (propertyName) => (event) => {
