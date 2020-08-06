@@ -37,6 +37,7 @@ class UserPage extends Component {
         ))}
 
         <p>User data is {JSON.stringify(this.props.user)}</p>
+        <p>Current task list data is {JSON.stringify(this.props.currentTaskList)}</p>
       </div>
     );
   }
