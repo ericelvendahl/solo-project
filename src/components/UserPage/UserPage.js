@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import LogOutButton from "../LogOutButton/LogOutButton";
+import { Link } from "react-router-dom";
 
 class UserPage extends Component {
   componentDidMount() {
@@ -8,8 +9,12 @@ class UserPage extends Component {
       type: "FETCH_ALL_TASK_LISTS",
       payload: this.props.user.id,
     });
-    //payload: this.props.state.user.id,
   }
+  linkClicked = (thisID) => {
+    console.log("In linkClicked, thisID is", thisID);
+    this.props.dispatch({ type: "FETCH_LIST_BY_ID", payload: thisID });
+    this.props.history.push("/currenttasklist");
+  };
   // this component doesn't do much to start, just renders some user info to the DOM
   render() {
     return (
@@ -17,7 +22,20 @@ class UserPage extends Component {
         <h1 id="welcome">Welcome, {this.props.user.username}!</h1>
         <p>Your ID is: {this.props.user.id}</p>
         <LogOutButton className="log-in" />
-        <p>Your task lists are: {JSON.stringify(this.props.task)}</p>
+
+        {this.props.allTaskLists.map((x, key) => (
+          <p key={key}>
+            <Link
+              to="/currenttasklist"
+              onClick={() => {
+                this.linkClicked(x.id);
+              }}
+            >
+              {x.id}, {x.list_name}
+            </Link>
+          </p>
+        ))}
+
         <p>User data is {JSON.stringify(this.props.user)}</p>
       </div>
     );
@@ -27,7 +45,7 @@ class UserPage extends Component {
 // Instead of taking everything from state, we just want the user info.
 const mapStateToProps = (state) => ({
   user: state.user,
-  task: state.task,
+  allTaskLists: state.allTaskLists,
 });
 
 // this allows us to use <App /> in index.js

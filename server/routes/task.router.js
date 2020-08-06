@@ -5,8 +5,26 @@ const {
   rejectUnauthenticated,
 } = require("../modules/authentication-middleware");
 
-// get all task list named and ids for a given user
+// get all tasks from one list by id
 router.get("/list/:id", rejectUnauthenticated, (req, res) => {
+  //   const username = req.body.username;
+  //   const password = encryptLib.encryptPassword(req.body.password);
+
+  const queryText = `SELECT "task".task_name FROM "task" JOIN "task_list" ON "task_list".id = "task".task_list_id
+	WHERE "task_list".id = ${req.params.id};`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      console.log("GET /api/task/list successsful.");
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.log("Error in /api/task/list is", err);
+      res.sendStatus(500);
+    });
+});
+// get all task list names and ids for a given user
+router.get("/listsbyuser/:id", rejectUnauthenticated, (req, res) => {
   //   const username = req.body.username;
   //   const password = encryptLib.encryptPassword(req.body.password);
 
@@ -18,12 +36,11 @@ router.get("/list/:id", rejectUnauthenticated, (req, res) => {
   pool
     .query(queryText)
     .then((result) => {
-      console.log("GET /api/task/list successsful. req.body is", req.body);
-      console.log("res.rows is", res);
+      console.log("GET /api/task/listsbyuser successsful.");
       res.send(result.rows);
     })
     .catch((err) => {
-      console.log("Error in /api/task/list is", err);
+      console.log("Error in /api/task/listsbyuser is", err);
       res.sendStatus(500);
     });
 });
