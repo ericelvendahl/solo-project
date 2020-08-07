@@ -2,19 +2,29 @@ import axios from "axios";
 import { put, takeLatest } from "redux-saga/effects";
 
 function* taskSaga() {
+  yield takeLatest("ADD_TASK", addTask);
+  yield takeLatest("DELETE_TASK", deleteTask);
   yield takeLatest("FETCH_ALL_TASK_LISTS", fetchAllTaskLists);
   yield takeLatest("FETCH_LIST_BY_ID", fetchListByID);
-  yield takeLatest("ADD_TASK", addTask);
 } // end taskSaga
 
-function* addTask(action){
+function* addTask(action) {
   console.log("in addTask saga");
-  try{
+  try {
     yield axios.post("/api/task/add/", action.payload);
-  }catch(error){
+  } catch (error) {
     console.log("Add task POST failed in saga with error:", error);
   }
-}
+} // end addTask
+
+function* deleteTask(action) {
+  console.log("in deleteTask saga with action.payload of", action.payload);
+  try {
+    yield axios.delete("/api/task/" + action.payload);
+  } catch (error) {
+    console.log("Error in deleteTask saga axios call. Error is", errors);
+  }
+} // end deleteTask
 
 // fetches all tasks lists for a certain user
 function* fetchAllTaskLists(action) {

@@ -31,6 +31,11 @@ class CurrentTaskListPage extends Component {
     });
   }; // end addClicked
 
+  deleteClicked = (id) => {
+    console.log("in deleteClicked. id is", id);
+    this.props.dispatch({type: "DELETE_TASK", payload: id})
+  };
+
   handleInputChangeFor = (propertyName) => (event) => {
     this.setState({
       [propertyName]: event.target.value,
@@ -46,27 +51,37 @@ class CurrentTaskListPage extends Component {
     return (
       <div className="parent">
         <div className="child-span-12">
-          Task Name:
-          <input
-            type="text"
-            name="taskName"
-            value={this.state.taskName}
-            onChange={this.handleInputChangeFor("taskName")}
-          />
-          Description:
-          <input
-            type="text"
-            name="taskDescription"
-            value={this.state.taskDescription}
-            onChange={this.handleInputChangeFor("taskDescription")}
-          />
-          <button className="log-in" onClick={this.addClicked}>
-            Add task
-          </button>
-          {this.showAddComponent ? <p>true</p> : <p>false</p>}
+          <h3>Add a new task:</h3>
+          <br />
+          <p>
+            Task Name:
+            <input
+              type="text"
+              name="taskName"
+              value={this.state.taskName}
+              onChange={this.handleInputChangeFor("taskName")}
+            />
+            Description:
+            <input
+              type="text"
+              name="taskDescription"
+              value={this.state.taskDescription}
+              onChange={this.handleInputChangeFor("taskDescription")}
+            />
+            <button className="log-in" onClick={this.addClicked}>
+              Add task
+            </button>
+          </p>
+          {/* {this.showAddComponent ? <p>true</p> : <p>false</p>} */}
           <p>Current task list: {JSON.stringify(this.props.currentTaskList)}</p>
           {this.props.currentTaskList.map((x, key) => (
-            <p key={key}>{x.task_name}</p>
+            <p key={key}>
+              {x.task_name}--{x.task_description}-{x.id}
+              <span>&nbsp;</span>
+              <button onClick={() => {
+                this.deleteClicked(x.id);
+              }}>X</button>
+            </p>
           ))}
           <p>User data is {JSON.stringify(this.props.user)}</p>
         </div>
