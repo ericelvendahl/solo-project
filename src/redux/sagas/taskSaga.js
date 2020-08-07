@@ -22,7 +22,7 @@ function* deleteTask(action) {
   try {
     yield axios.delete("/api/task/" + action.payload);
   } catch (error) {
-    console.log("Error in deleteTask saga axios call. Error is", errors);
+    console.log("Error in deleteTask saga axios call. Error is", error);
   }
 } // end deleteTask
 

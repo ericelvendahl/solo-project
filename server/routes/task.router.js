@@ -5,6 +5,21 @@ const {
   rejectUnauthenticated,
 } = require("../modules/authentication-middleware");
 
+router.delete("/:id", rejectUnauthenticated, (req, res) => {
+  console.log("in delete / with id:", req.params.id);
+  const queryString = `DELETE FROM "task" WHERE "id" = ${req.params.id};`;
+  pool
+    .query(queryString)
+    .then((result) => {
+      console.log(`delete ${req.params.id} successful`);
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      console.log(`error in / delete for ${req.params.id}`);
+      res.sendStatus(500);
+    });
+});
+
 // get all tasks from one list by id
 router.get("/list/:id", rejectUnauthenticated, (req, res) => {
   //   const username = req.body.username;
@@ -27,7 +42,8 @@ router.get("/list/:id", rejectUnauthenticated, (req, res) => {
       console.log("Error in /api/task/list is", err);
       res.sendStatus(500);
     });
-});
+}); // end router.get "/list/:id"
+
 // get all task list names and ids for a given user
 router.get("/listsbyuser/:id", rejectUnauthenticated, (req, res) => {
   //   const username = req.body.username;
@@ -48,7 +64,7 @@ router.get("/listsbyuser/:id", rejectUnauthenticated, (req, res) => {
       console.log("Error in GET /api/task/listsbyuser is", err);
       res.sendStatus(500);
     });
-});
+}); // end router.get "/listsbyuser/:id"
 
 router.post("/add/", (req, res) => {
   console.log("req.body is", req.body);

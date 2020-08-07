@@ -33,7 +33,11 @@ class CurrentTaskListPage extends Component {
 
   deleteClicked = (id) => {
     console.log("in deleteClicked. id is", id);
-    this.props.dispatch({type: "DELETE_TASK", payload: id})
+    this.props.dispatch({ type: "DELETE_TASK", payload: id });
+    this.props.dispatch({
+      type: "FETCH_LIST_BY_ID",
+      payload: this.props.currentTaskList[0].task_list_id,
+    });
   };
 
   handleInputChangeFor = (propertyName) => (event) => {
@@ -78,9 +82,13 @@ class CurrentTaskListPage extends Component {
             <p key={key}>
               {x.task_name}--{x.task_description}-{x.id}
               <span>&nbsp;</span>
-              <button onClick={() => {
-                this.deleteClicked(x.id);
-              }}>X</button>
+              <button
+                onClick={() => {
+                  this.deleteClicked(x.id);
+                }}
+              >
+                X
+              </button>
             </p>
           ))}
           <p>User data is {JSON.stringify(this.props.user)}</p>

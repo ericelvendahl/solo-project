@@ -31,13 +31,15 @@ class UserPage extends Component {
                 this.linkClicked(x.id);
               }}
             >
-              {x.id}, {x.list_name}
+              {x.id}, {x.task_list_id}
             </Link>
           </p>
         ))}
 
         <p>User data is {JSON.stringify(this.props.user)}</p>
-        <p>Current task list data is {JSON.stringify(this.props.currentTaskList)}</p>
+        <p>
+          Current task list data is {JSON.stringify(this.props.currentTaskList)}
+        </p>
       </div>
     );
   }
