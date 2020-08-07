@@ -13,6 +13,7 @@ class UserPage extends Component {
   linkClicked = (thisID) => {
     console.log("In linkClicked, thisID is", thisID);
     this.props.dispatch({ type: "FETCH_LIST_BY_ID", payload: thisID });
+    this.props.dispatch({ type: "FETCH_LIST_NAME_BY_ID", payload: thisID });
     this.props.history.push("/currenttasklist");
   };
   // this component doesn't do much to start, just renders some user info to the DOM

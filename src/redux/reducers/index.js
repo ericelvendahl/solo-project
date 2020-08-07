@@ -4,7 +4,7 @@ import loginMode from "./loginModeReducer";
 import user from "./userReducer";
 import allTaskLists from "./allTaskListsReducer";
 import currentTaskList from "./currentTaskListReducer";
-
+import currentTaskListName from "./currentTaskListNameReducer";
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
 // This is imported in index.js as rootSaga
@@ -17,6 +17,7 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   allTaskLists,
   currentTaskList,
+  currentTaskListName,
 });
 
 export default rootReducer;

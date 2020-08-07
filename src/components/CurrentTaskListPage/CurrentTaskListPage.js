@@ -51,10 +51,24 @@ class CurrentTaskListPage extends Component {
     // this.props.dispatch({ type: "FETCH_LIST_BY_ID", payload: thisID });
   }; // end linkClicked
 
+  renameClicked = () => {
+    const enteredName = prompt("Enter a new name for this list");
+    console.log(enteredName);
+    this.props.dispatch({
+      type: "UPDATE_LIST_NAME",
+      payload: {
+        name: enteredName,
+        id: this.props.currentTaskList[0].task_list_id,
+      },
+    });
+  };
+
   render() {
     return (
       <div className="parent">
         <div className="child-span-12">
+          <h2>{JSON.stringify(this.props.currentTaskListName)}</h2>
+          <button onClick={this.renameClicked}>Rename</button>
           <h3>Add a new task:</h3>
           <br />
           <p>
@@ -103,6 +117,7 @@ const mapStateToProps = (state) => ({
   user: state.user,
   allTaskLists: state.allTaskLists,
   currentTaskList: state.currentTaskList,
+  currentTaskListName: state.currentTaskListName,
 });
 
 // this allows us to use <App /> in index.js

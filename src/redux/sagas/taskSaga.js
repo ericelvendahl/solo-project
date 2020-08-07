@@ -6,6 +6,8 @@ function* taskSaga() {
   yield takeLatest("DELETE_TASK", deleteTask);
   yield takeLatest("FETCH_ALL_TASK_LISTS", fetchAllTaskLists);
   yield takeLatest("FETCH_LIST_BY_ID", fetchListByID);
+  yield takeLatest("FETCH_LIST_NAME_BY_ID", fetchListNameByID);
+  yield takeLatest("UPDATE_LIST_NAME", updateListName);
 } // end taskSaga
 
 function* addTask(action) {
@@ -49,4 +51,32 @@ function* fetchListByID(action) {
     console.log("Get task list by ID failed with error:", error);
   }
 } // end fetchListByID
+
+function* fetchListNameByID(action) {
+  console.log(
+    "in taskSaga fetchListNameByID. action.payload is",
+    action.payload
+  );
+  try {
+    // axios call for current task list name
+    const response = yield axios.get("/api/task/listname/" + action.payload);
+    console.log("in taskSaga fetchListNameByID. response is", response);
+    yield put({
+      type: "SET_CURRENT_TASK_LIST_NAME",
+      payload: response.data[0].task_list_name,
+    });
+  } catch (error) {
+    console.log("Get task list name by ID failed with error:", error);
+  }
+} // end fetchListNameByID
+
+function* updateListName(action) {
+  console.log("in addTask saga. action.payload is", action.payload);
+  try {
+    yield axios.post("/api/task/updatelistname", action.payload);
+  } catch (error) {
+    console.log("Add task POST failed in saga with error:", error);
+  }
+} // end addTask
+
 export default taskSaga;

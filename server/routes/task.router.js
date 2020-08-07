@@ -44,6 +44,29 @@ router.get("/list/:id", rejectUnauthenticated, (req, res) => {
     });
 }); // end router.get "/list/:id"
 
+router.get("/listname/:id", rejectUnauthenticated, (req, res) => {
+  //   const username = req.body.username;
+  //   const password = encryptLib.encryptPassword(req.body.password);
+
+  // former query that returns relevany task name by ID
+  // const queryText = `SELECT "task".task_name FROM "task" JOIN "task_list" ON "task_list".id = "task".task_list_id
+  // WHERE "task_list".id = ${req.params.id};`;
+
+  const queryText = `SELECT "task_list_name" FROM "task" JOIN "task_list" 
+    ON "task".task_list_id = "task_list".id 
+    WHERE "task".task_list_id = ${req.params.id} GROUP BY "task_list".id;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      console.log("GET /api/listname successsful.");
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.log("Error in /api/listname is", err);
+      res.sendStatus(500);
+    });
+}); // end router.get "/listname/:id"
+
 // get all task list names and ids for a given user
 router.get("/listsbyuser/:id", rejectUnauthenticated, (req, res) => {
   //   const username = req.body.username;
@@ -82,6 +105,21 @@ router.post("/add/", (req, res) => {
       res.sendStatus(500);
     });
 });
+router.post("/updatelistname/", (req, res) => {
+  console.log("in /updatelistname req.body is", req.body);
+  const queryText = `UPDATE "task_list" SET "task_list_name" = '${req.body.name}' WHERE "id" = ${req.body.id};`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      console.log("POST /api/task/add successsful.");
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.log("Error in POST /api/task/add is", err);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;
 
 /**
