@@ -4,6 +4,21 @@ import LogOutButton from "../LogOutButton/LogOutButton";
 
 class CurrentTaskListPage extends Component {
   componentDidMount() {}
+  componentDidUpdate() {
+    // if (
+    //   prevProps.currentTaskList[0].task_list_id !==
+    //   this.props.currentTaskList[0].task_list_id
+    // ) {
+    //   this.props.dispatch({
+    //     type: "FETCH_LIST_BY_ID",
+    //     payload: this.props.currentTaskList[0].task_list_id,
+    //   });
+    //   this.props.dispatch({
+    //     type: "FETCH_LIST_NAME_BY_ID",
+    //     payload: this.props.currentTaskList[0].task_list_id,
+    //   });
+    // }
+  }
 
   state = {
     showAddComponent: false,
@@ -91,10 +106,10 @@ class CurrentTaskListPage extends Component {
             </button>
           </p>
           {/* {this.showAddComponent ? <p>true</p> : <p>false</p>} */}
-          <p>Current task list: {JSON.stringify(this.props.currentTaskList)}</p>
+          {/* <p>Current task list: {JSON.stringify(this.props.currentTaskList)}</p> */}
           {this.props.currentTaskList.map((x, key) => (
             <p key={key}>
-              {x.task_name}--{x.task_description}-{x.id}
+              <b>{x.task_name}</b>--{x.task_description}
               <span>&nbsp;</span>
               <button
                 onClick={() => {
@@ -105,7 +120,7 @@ class CurrentTaskListPage extends Component {
               </button>
             </p>
           ))}
-          <p>User data is {JSON.stringify(this.props.user)}</p>
+          {/* <p>User data is {JSON.stringify(this.props.user)}</p> */}
         </div>
       </div>
     );

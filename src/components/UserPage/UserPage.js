@@ -23,7 +23,7 @@ class UserPage extends Component {
         <h1 id="welcome">Welcome, {this.props.user.username}!</h1>
         <p>Your ID is: {this.props.user.id}</p>
         <LogOutButton className="log-in" />
-
+        <p><h3>Choose a list:</h3></p>
         {this.props.allTaskLists.map((x, key) => (
           <p key={key}>
             <Link
@@ -37,10 +37,10 @@ class UserPage extends Component {
           </p>
         ))}
 
-        <p>User data is {JSON.stringify(this.props.user)}</p>
+        {/* <p>User data is {JSON.stringify(this.props.user)}</p>
         <p>
           Current task list data is {JSON.stringify(this.props.currentTaskList)}
-        </p>
+        </p> */}
       </div>
     );
   }
