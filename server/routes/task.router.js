@@ -93,9 +93,9 @@ router.post("/add/", (req, res) => {
   console.log("req.body is", req.body);
   const queryText = `INSERT INTO "task" ("task_list_id", "task_name", "task_description") 
                     VALUES 
-                    (${req.body.currentTaskList[0].task_list_id}, '${req.body.name}', '${req.body.description}');`;
+                    ($1, $2, $3);`;
   pool
-    .query(queryText)
+    .query(queryText, [req.body.currentTaskList[0].task_list_id, req.body.name, req.body.description ])
     .then((result) => {
       console.log("POST /api/task/add successsful.");
       res.send(result.rows);
@@ -107,9 +107,9 @@ router.post("/add/", (req, res) => {
 });
 router.post("/updatelistname/", (req, res) => {
   console.log("in /updatelistname req.body is", req.body);
-  const queryText = `UPDATE "task_list" SET "task_list_name" = '${req.body.name}' WHERE "id" = ${req.body.id};`;
+  const queryText = `UPDATE "task_list" SET "task_list_name" = $1 WHERE "id" = $2;`;
   pool
-    .query(queryText)
+    .query(queryText, [req.body.name, req.body.id])
     .then((result) => {
       console.log("POST /api/task/add successsful.");
       res.send(result.rows);
