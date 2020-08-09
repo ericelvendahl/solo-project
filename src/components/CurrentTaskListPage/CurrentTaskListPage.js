@@ -5,10 +5,7 @@ import LogOutButton from "../LogOutButton/LogOutButton";
 class CurrentTaskListPage extends Component {
   componentDidMount() {}
   componentDidUpdate(prevProps) {
-    if (
-      prevProps.currentTaskList !==
-      this.props.currentTaskList
-    ) {
+    if (prevProps.currentTaskList !== this.props.currentTaskList) {
       this.props.dispatch({
         type: "FETCH_LIST_BY_ID",
         payload: this.props.currentTaskList[0].task_list_id,
@@ -69,23 +66,31 @@ class CurrentTaskListPage extends Component {
   renameClicked = () => {
     const enteredName = prompt("Enter a new name for this list");
     console.log(enteredName);
-    this.props.dispatch({
-      type: "UPDATE_LIST_NAME",
-      payload: {
-        name: enteredName,
-        id: this.props.currentTaskList[0].task_list_id,
-      },
-    });
+    if (enteredName !== null) {
+      this.props.dispatch({
+        type: "UPDATE_LIST_NAME",
+        payload: {
+          name: enteredName,
+          id: this.props.currentTaskList[0].task_list_id,
+        },
+      });
+    }
   };
 
   render() {
     return (
       <div className="parent main-container">
         <div className="child-span-12">
-          <h2>{JSON.stringify(this.props.currentTaskListName)}</h2>
-          <button onClick={this.renameClicked}>Rename</button>
+          <h2>
+            {JSON.stringify(this.props.currentTaskListName)}
+            <span>
+              <button className="button-small" onClick={this.renameClicked}>
+                Rename
+              </button>
+            </span>
+          </h2>
+
           <h3>Add a new task:</h3>
-          <br />
           <p>
             Task Name:
             <input
@@ -101,7 +106,7 @@ class CurrentTaskListPage extends Component {
               value={this.state.taskDescription}
               onChange={this.handleInputChangeFor("taskDescription")}
             />
-            <button className="log-in" onClick={this.addClicked}>
+            <button className="button-small" onClick={this.addClicked}>
               Add task
             </button>
           </p>
