@@ -18,8 +18,8 @@ class TaskListItem extends Component {
     return (
       <div className="task-list-item">
         <ul>
-          <li>{JSON.stringify(this.props.thisItem.task_name)}</li>
-          <li>{JSON.stringify(this.props.thisItem.task_description)}</li>
+          <h3><li className="li-heading">{JSON.stringify(this.props.thisItem.task_name)}</li></h3>
+          <li className="li-small">{JSON.stringify(this.props.thisItem.task_description)}</li>
           <li>
             <button
               className="button-small"
@@ -27,7 +27,7 @@ class TaskListItem extends Component {
                 this.deleteClicked(this.props.thisItem.id);
               }}
             >
-              X
+              Delete
             </button>
           </li>
         </ul>
