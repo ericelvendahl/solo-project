@@ -3,12 +3,14 @@
     font-weight: 700;
     display: inline-block;
     color: #f2f2f2;
-    padding-left: 10px;
+    /* padding-left: 10px; */
 }
 
 .nav {
   overflow: hidden;
   background-color: #4b4b4b;
+  padding-left:20%;
+  padding-right:20%;
 }
 
 .nav-link {

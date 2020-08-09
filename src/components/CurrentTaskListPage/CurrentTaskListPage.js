@@ -4,20 +4,20 @@ import LogOutButton from "../LogOutButton/LogOutButton";
 
 class CurrentTaskListPage extends Component {
   componentDidMount() {}
-  componentDidUpdate() {
-    // if (
-    //   prevProps.currentTaskList[0].task_list_id !==
-    //   this.props.currentTaskList[0].task_list_id
-    // ) {
-    //   this.props.dispatch({
-    //     type: "FETCH_LIST_BY_ID",
-    //     payload: this.props.currentTaskList[0].task_list_id,
-    //   });
-    //   this.props.dispatch({
-    //     type: "FETCH_LIST_NAME_BY_ID",
-    //     payload: this.props.currentTaskList[0].task_list_id,
-    //   });
-    // }
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.currentTaskList !==
+      this.props.currentTaskList
+    ) {
+      this.props.dispatch({
+        type: "FETCH_LIST_BY_ID",
+        payload: this.props.currentTaskList[0].task_list_id,
+      });
+      this.props.dispatch({
+        type: "FETCH_LIST_NAME_BY_ID",
+        payload: this.props.currentTaskList[0].task_list_id,
+      });
+    }
   }
 
   state = {
@@ -80,7 +80,7 @@ class CurrentTaskListPage extends Component {
 
   render() {
     return (
-      <div className="parent">
+      <div className="parent main-container">
         <div className="child-span-12">
           <h2>{JSON.stringify(this.props.currentTaskListName)}</h2>
           <button onClick={this.renameClicked}>Rename</button>
