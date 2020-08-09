@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import LogOutButton from "../LogOutButton/LogOutButton";
+//import LogOutButton from "../LogOutButton/LogOutButton";
+import TaskListItem from "../TaskListItem/TaskListItem";
 
 class CurrentTaskListPage extends Component {
   componentDidMount() {}
@@ -111,21 +112,27 @@ class CurrentTaskListPage extends Component {
             </button>
           </p>
           {/* {this.showAddComponent ? <p>true</p> : <p>false</p>} */}
-          {/* <p>Current task list: {JSON.stringify(this.props.currentTaskList)}</p> */}
-          {this.props.currentTaskList.map((x, key) => (
-            <p key={key}>
-              <b>{x.task_name}</b>--{x.task_description}
-              <span>&nbsp;</span>
-              <button
-                onClick={() => {
-                  this.deleteClicked(x.id);
-                }}
-              >
-                X
-              </button>
+          {
+            <p>
+              {/* Current task list: {JSON.stringify(this.props.currentTaskList)} */}
             </p>
+          }
+          {this.props.currentTaskList.map((x, key) => (
+            // <p key={key}>
+            //   <b>{x.task_name}</b>--{x.task_description}
+            //   <span>&nbsp;</span>
+            //   <button
+            //     onClick={() => {
+            //       this.deleteClicked(x.id);
+            //     }}
+            //   >
+            //     X
+            //   </button>
+            // </p>
+            <TaskListItem thisItem={x}></TaskListItem>
           ))}
-          {/* <p>User data is {JSON.stringify(this.props.user)}</p> */}
+          {/* <p>User data is {JSON.stringify(this.props.user)}</p>
+          <p>currentTaskList is {JSON.stringify(this.props.currentTaskList)}</p> */}
         </div>
       </div>
     );

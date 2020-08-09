@@ -71,11 +71,11 @@ input {
   cursor: pointer;
 }
 
-.parent {
+/* .parent {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
 }
 
 .child-span-12 {
   grid-column: 1 / 13;
-}
+} */
