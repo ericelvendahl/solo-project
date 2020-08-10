@@ -32,7 +32,9 @@ li {
 
 .li-heading {
   border: 1px solid black;
-  margin: 0.25;
+  background-color: rgb(121, 121, 121);
+  color: white;
+  margin: 0.25em;
   padding: 0.25em;
   width: 100%;
 }

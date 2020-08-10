@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import LogOutButton from "../LogOutButton/LogOutButton";
-import { Link } from "react-router-dom";
 import "./TaskListItem.css";
 
 class TaskListItem extends Component {
@@ -18,7 +16,8 @@ class TaskListItem extends Component {
     return (
       <div className="task-list-item">
         <ul>
-          <h3><li className="li-heading">{JSON.stringify(this.props.thisItem.task_name)}</li></h3>
+          <li className="li-heading">{JSON.stringify(this.props.thisItem.task_name)}</li>
+          
           <li className="li-small">{JSON.stringify(this.props.thisItem.task_description)}</li>
           <li>
             <button
