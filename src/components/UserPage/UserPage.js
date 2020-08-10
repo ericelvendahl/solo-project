@@ -35,6 +35,8 @@ class UserPage extends Component {
             </Link>
           </p>
         ))}
+        <h3>Add a new list:</h3>
+        <input></input><button className="button-small">Add</button>
         <p>allTaskLists reducer is: {JSON.stringify(this.props.allTaskLists)}</p>
         <p>User data is {JSON.stringify(this.props.user)}</p>
         <p>
