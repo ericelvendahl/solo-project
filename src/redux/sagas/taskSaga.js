@@ -3,6 +3,7 @@ import { put, takeLatest } from "redux-saga/effects";
 
 function* taskSaga() {
   yield takeLatest("ADD_TASK", addTask);
+  yield takeLatest("ADD_NEW_LIST", addNewList);
   yield takeLatest("DELETE_TASK", deleteTask);
   yield takeLatest("FETCH_ALL_TASK_LISTS", fetchAllTaskLists);
   yield takeLatest("FETCH_LIST_BY_ID", fetchListByID);
@@ -18,6 +19,15 @@ function* addTask(action) {
     console.log("Add task POST failed in saga with error:", error);
   }
 } // end addTask
+
+function* addNewList(action) {
+  console.log("in addNewList saga with action.payload of", action.payload);
+  try {
+    yield axios.post("/api/task/list/add", {name: action.payload});
+  } catch (error) {
+    console.log("Add new list POST failed in saga with error:", error);
+  }
+}
 
 function* deleteTask(action) {
   console.log("in deleteTask saga with action.payload of", action.payload);

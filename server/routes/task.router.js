@@ -89,13 +89,18 @@ router.get("/listsbyuser/:id", rejectUnauthenticated, (req, res) => {
     });
 }); // end router.get "/listsbyuser/:id"
 
+// Add task to list
 router.post("/add/", (req, res) => {
   console.log("req.body is", req.body);
   const queryText = `INSERT INTO "task" ("task_list_id", "task_name", "task_description") 
                     VALUES 
                     ($1, $2, $3);`;
   pool
-    .query(queryText, [req.body.currentTaskList[0].task_list_id, req.body.name, req.body.description ])
+    .query(queryText, [
+      req.body.currentTaskList[0].task_list_id,
+      req.body.name,
+      req.body.description,
+    ])
     .then((result) => {
       console.log("POST /api/task/add successsful.");
       res.send(result.rows);
@@ -104,7 +109,47 @@ router.post("/add/", (req, res) => {
       console.log("Error in POST /api/task/add is", err);
       res.sendStatus(500);
     });
-});
+}); // end router.post("/add/"
+
+// add new list and assign to current user
+router.post("/list/add/", async (req, res) => {
+  console.log("in /list/add/ POST. req.body is", req.body);
+
+  // const name = req.body.name;
+  // // const amount = req.body;
+
+  // const connection = await pool.connect();
+
+  // try{
+  //   await connection.query('BEGIN;')
+
+  //   // Create the account and get back the new ID
+  //   const createAccount = `INSERT INTO account (name) VALUES  ($1) RETURNING id;`
+  //   // We care about the result coming out of the database, sos sae it (need id)
+  //   const createResult = await connection.query(createAccount, [name])
+
+  //   // Get the id from the query result
+  //   const newAcctId = createResult.rows[0].id;
+  //   console.log('new id', newAcctId);
+
+  //   const depositStatement = `INSERT INTO register (acct_id, amount) VALUES ($1, $2);`
+  //   // We don't care about the result coming back so ignore it
+  //   await connection.query(depositStatement, [newAcctId, amount]);
+
+  //   await connection.query('COMMIT;');
+  //   res.sendStatus(200);
+  // }catch (err) {
+  //   console.log("Error on create account", err);
+  //   await connection.query("ROLLBACK;");
+  //   res.sendst;
+  // } finally {
+  //   // THIS IS ALSO REALLY IMPORTANT!!!
+  //   // Puts the connection back in the pool to be used again later.
+  //   // FREE THE CONNECTION IN FINALLY
+  //   connection.release();
+  // }
+}); // end router.post("/list/add")
+
 router.post("/updatelistname/", (req, res) => {
   console.log("in /updatelistname req.body is", req.body);
   const queryText = `UPDATE "task_list" SET "task_list_name" = $1 WHERE "id" = $2;`;
@@ -118,7 +163,7 @@ router.post("/updatelistname/", (req, res) => {
       console.log("Error in POST /api/task/add is", err);
       res.sendStatus(500);
     });
-});
+}); // end router.post("/updatelistname/"
 
 module.exports = router;
 
