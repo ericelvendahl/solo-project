@@ -18,7 +18,7 @@ class UserPage extends Component {
   addClicked = () => {
     this.props.dispatch({
       type: "ADD_NEW_LIST",
-      payload: this.state.newListName,
+      payload: {name: this.state.newListName, id: this.props.user.id},
     });
   };
 

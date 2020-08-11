@@ -23,7 +23,7 @@ function* addTask(action) {
 function* addNewList(action) {
   console.log("in addNewList saga with action.payload of", action.payload);
   try {
-    yield axios.post("/api/task/list/add", {name: action.payload});
+    yield axios.post("/api/task/list/add", {name: action.payload.name, id: action.payload.id});
   } catch (error) {
     console.log("Add new list POST failed in saga with error:", error);
   }

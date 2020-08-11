@@ -115,39 +115,39 @@ router.post("/add/", (req, res) => {
 router.post("/list/add/", async (req, res) => {
   console.log("in /list/add/ POST. req.body is", req.body);
 
-  // const name = req.body.name;
-  // // const amount = req.body;
+  const name = req.body.name;
+  const userId = req.body.id;
+  // const amount = req.body;
 
-  // const connection = await pool.connect();
+  const connection = await pool.connect();
 
-  // try{
-  //   await connection.query('BEGIN;')
+  try {
+    await connection.query("BEGIN;");
 
-  //   // Create the account and get back the new ID
-  //   const createAccount = `INSERT INTO account (name) VALUES  ($1) RETURNING id;`
-  //   // We care about the result coming out of the database, sos sae it (need id)
-  //   const createResult = await connection.query(createAccount, [name])
+    // Create the list and get back the new ID
+    const createAccount = `INSERT INTO "task_list" ("task_list_name") VALUES ($1) RETURNING "id";`;
+    // We care about the result coming out of the database, so save it (need id)
+    const createResult = await connection.query(createAccount, [name]);
 
-  //   // Get the id from the query result
-  //   const newAcctId = createResult.rows[0].id;
-  //   console.log('new id', newAcctId);
+    // Get the id from the query result
+    const newTaskListId = createResult.rows[0].id;
+    console.log("new list id is:", newTaskListId);
 
-  //   const depositStatement = `INSERT INTO register (acct_id, amount) VALUES ($1, $2);`
-  //   // We don't care about the result coming back so ignore it
-  //   await connection.query(depositStatement, [newAcctId, amount]);
+    const userTaskListQuery = `INSERT INTO user_task_list (task_list_id, user_id) VALUES ($1, $2);`;
+    // We don't care about the result coming back so ignore it
+    await connection.query(userTaskListQuery, [newTaskListId, userId]);
 
-  //   await connection.query('COMMIT;');
-  //   res.sendStatus(200);
-  // }catch (err) {
-  //   console.log("Error on create account", err);
-  //   await connection.query("ROLLBACK;");
-  //   res.sendst;
-  // } finally {
-  //   // THIS IS ALSO REALLY IMPORTANT!!!
-  //   // Puts the connection back in the pool to be used again later.
-  //   // FREE THE CONNECTION IN FINALLY
-  //   connection.release();
-  // }
+    await connection.query("COMMIT;");
+    res.sendStatus(200);
+  } catch (err) {
+    console.log("Error on create new list:", err);
+    await connection.query("ROLLBACK;");
+    res.sendStatus(201);
+  } finally {
+    // IMPORTANT:
+    // Puts the connection back in the pool to be used again later.
+    connection.release();
+  }
 }); // end router.post("/list/add")
 
 router.post("/updatelistname/", (req, res) => {
