@@ -9,6 +9,25 @@ class UserPage extends Component {
       type: "FETCH_ALL_TASK_LISTS",
       payload: this.props.user.id,
     });
+    // this.props.dispatch({
+    //   type: "SET_CURRENT_TASK_LIST",
+    //   payload: [
+    //     {
+    //       id: 1,
+    //       task_claimed: false,
+    //       task_complete: false,
+    //       task_description: "default",
+    //       task_list_id: 1,
+    //       task_name: "default",
+    //     },
+    //   ],
+    // });
+  }
+  componentDidUpdate() {
+    this.props.dispatch({
+      type: "FETCH_ALL_TASK_LISTS",
+      payload: this.props.user.id,
+    });
   }
 
   state = {
@@ -18,7 +37,7 @@ class UserPage extends Component {
   addClicked = () => {
     this.props.dispatch({
       type: "ADD_NEW_LIST",
-      payload: {name: this.state.newListName, id: this.props.user.id},
+      payload: { name: this.state.newListName, id: this.props.user.id },
     });
   };
 
@@ -28,10 +47,10 @@ class UserPage extends Component {
     });
   };
 
-  linkClicked = (thisID) => {
-    console.log("In linkClicked, thisID is", thisID);
-    this.props.dispatch({ type: "FETCH_LIST_BY_ID", payload: thisID });
-    this.props.dispatch({ type: "FETCH_LIST_NAME_BY_ID", payload: thisID });
+  linkClicked = (thisId) => {
+    console.log("In linkClicked, thisId is", thisId);
+    this.props.dispatch({ type: "FETCH_LIST_BY_ID", payload: thisId });
+    this.props.dispatch({ type: "FETCH_LIST_NAME_BY_ID", payload: thisId });
     this.props.history.push("/currenttasklist");
   };
 

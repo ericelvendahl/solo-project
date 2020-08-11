@@ -52,9 +52,12 @@ router.get("/listname/:id", rejectUnauthenticated, (req, res) => {
   // const queryText = `SELECT "task".task_name FROM "task" JOIN "task_list" ON "task_list".id = "task".task_list_id
   // WHERE "task_list".id = ${req.params.id};`;
 
-  const queryText = `SELECT "task_list_name" FROM "task" JOIN "task_list" 
-    ON "task".task_list_id = "task_list".id 
-    WHERE "task".task_list_id = ${req.params.id} GROUP BY "task_list".id;`;
+  // former working version
+  // const queryText = `SELECT "task_list_name" FROM "task" JOIN "task_list"
+  //   ON "task".task_list_id = "task_list".id
+  //   WHERE "task".task_list_id = ${req.params.id} GROUP BY "task_list".id;`;
+  const queryText = `SELECT "task_list_name" FROM "task_list"  
+    WHERE "task_list".id = ${req.params.id};`;
   pool
     .query(queryText)
     .then((result) => {

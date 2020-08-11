@@ -4,17 +4,22 @@ import { connect } from "react-redux";
 import TaskListItem from "../TaskListItem/TaskListItem";
 
 class CurrentTaskListPage extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+
+  }
   componentDidUpdate(prevProps) {
-    if (prevProps.currentTaskList !== this.props.currentTaskList) {
-      this.props.dispatch({
-        type: "FETCH_LIST_BY_ID",
-        payload: this.props.currentTaskList[0].task_list_id,
-      });
-      this.props.dispatch({
-        type: "FETCH_LIST_NAME_BY_ID",
-        payload: this.props.currentTaskList[0].task_list_id,
-      });
+    // if there are no tasks in the current list (it is new), do not try to retrieve tasks
+    if (typeof this.props.currentTaskList[0] !== 'undefined') {
+      if (prevProps.currentTaskList !== this.props.currentTaskList) {
+        this.props.dispatch({
+          type: "FETCH_LIST_BY_ID",
+          payload: this.props.currentTaskList[0].task_list_id,
+        });
+        this.props.dispatch({
+          type: "FETCH_LIST_NAME_BY_ID",
+          payload: this.props.currentTaskList[0].task_list_id,
+        });
+      }
     }
   }
 
@@ -114,7 +119,7 @@ class CurrentTaskListPage extends Component {
           {/* {this.showAddComponent ? <p>true</p> : <p>false</p>} */}
           {
             <p>
-              {/* Current task list: {JSON.stringify(this.props.currentTaskList)} */}
+              Current task list: {JSON.stringify(this.props.currentTaskList)}
             </p>
           }
           {this.props.currentTaskList.map((x, key) => (
