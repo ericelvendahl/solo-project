@@ -9,7 +9,7 @@ class CurrentTaskListPage extends Component {
   }
   componentDidUpdate(prevProps) {
     // if there are no tasks in the current list (it is new), do not try to retrieve tasks
-    if (typeof this.props.currentTaskList[0] !== 'undefined') {
+    if (typeof this.props.currentTaskListName.id !== 'undefined') {
       if (prevProps.currentTaskList !== this.props.currentTaskList) {
         this.props.dispatch({
           type: "FETCH_LIST_BY_ID",
@@ -134,6 +134,7 @@ class CurrentTaskListPage extends Component {
           ))}
           <p>User data is {JSON.stringify(this.props.user)}</p>
           <p>currentTaskList is {JSON.stringify(this.props.currentTaskList)}</p>
+          <p>currentTaskListName is {JSON.stringify(this.props.currentTaskListName)}</p>
         </div>
       </div>
     );
