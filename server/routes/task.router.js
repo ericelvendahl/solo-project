@@ -29,7 +29,8 @@ router.get("/list/:id", rejectUnauthenticated, (req, res) => {
   // const queryText = `SELECT "task".task_name FROM "task" JOIN "task_list" ON "task_list".id = "task".task_list_id
   // WHERE "task_list".id = ${req.params.id};`;
 
-  const queryText = `SELECT "task".id, "task".task_list_id, "task".task_name, "task".task_description, "task".task_claimed, "task".task_complete FROM "task" JOIN "task_list" ON "task_list".id = "task".task_list_id
+  const queryText = `SELECT "task".id, "task".task_list_id, "task".task_name, "task".task_description, 
+  "task".task_claimed, "task".task_complete FROM "task" JOIN "task_list" ON "task_list".id = "task".task_list_id
 	WHERE "task_list".id = ${req.params.id};`;
 
   pool
@@ -94,16 +95,12 @@ router.get("/listsbyuser/:id", rejectUnauthenticated, (req, res) => {
 
 // Add task to list
 router.post("/add/", (req, res) => {
-  console.log("req.body is", req.body);
+  console.log("in /task/add POST. req.body is", req.body);
   const queryText = `INSERT INTO "task" ("task_list_id", "task_name", "task_description") 
                     VALUES 
                     ($1, $2, $3);`;
   pool
-    .query(queryText, [
-      req.body.currentTaskList[0].task_list_id,
-      req.body.name,
-      req.body.description,
-    ])
+    .query(queryText, [req.body.id, req.body.name, req.body.description])
     .then((result) => {
       console.log("POST /api/task/add successsful.");
       res.send(result.rows);

@@ -11,6 +11,32 @@ function* taskSaga() {
   yield takeLatest("UPDATE_LIST_NAME", updateListName);
 } // end taskSaga
 
+function* addNewList(action) {
+  console.log("in addNewList saga with action.payload of", action.payload);
+  try {
+    yield axios.post("/api/task/list/add", {
+      name: action.payload.name,
+      id: action.payload.id,
+    });
+    // set currentTaskListReducer to newly created list
+    // yield put({
+    //   type: "SET_CURRENT_TASK_LIST",
+    //   payload: [
+    //     {
+    //       id: 8,
+    //       task_list_id: 3,
+    //       task_name: "Get Cat Food",
+    //       task_description: "Meow Meow Hungry Meow Meow",
+    //       task_claimed: false,
+    //       task_complete: false,
+    //     },
+    //   ],
+    // });
+  } catch (error) {
+    console.log("Add new list POST failed in saga with error:", error);
+  }
+}
+
 function* addTask(action) {
   console.log("in addTask saga");
   try {
@@ -19,15 +45,6 @@ function* addTask(action) {
     console.log("Add task POST failed in saga with error:", error);
   }
 } // end addTask
-
-function* addNewList(action) {
-  console.log("in addNewList saga with action.payload of", action.payload);
-  try {
-    yield axios.post("/api/task/list/add", {name: action.payload.name, id: action.payload.id});
-  } catch (error) {
-    console.log("Add new list POST failed in saga with error:", error);
-  }
-}
 
 function* deleteTask(action) {
   console.log("in deleteTask saga with action.payload of", action.payload);
@@ -73,7 +90,7 @@ function* fetchListNameByID(action) {
     console.log("in taskSaga fetchListNameByID. response is", response);
     yield put({
       type: "SET_CURRENT_TASK_LIST_NAME",
-      payload: response.data[0].task_list_name,
+      payload: { name: response.data[0].task_list_name, id: action.payload }
     });
   } catch (error) {
     console.log("Get task list name by ID failed with error:", error);

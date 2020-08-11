@@ -36,12 +36,12 @@ class CurrentTaskListPage extends Component {
       payload: {
         name: this.state.taskName,
         description: this.state.taskDescription,
-        currentTaskList: this.props.currentTaskList,
+        id: this.props.currentTaskListName.id,
       },
     });
     this.props.dispatch({
       type: "FETCH_LIST_BY_ID",
-      payload: this.props.currentTaskList[0].task_list_id,
+      payload: this.props.currentTaskListName.id,
     });
     this.setState({
       taskName: "",
@@ -88,7 +88,7 @@ class CurrentTaskListPage extends Component {
       <div className="parent main-container">
         <div className="child-span-12">
           <h2>
-            {JSON.stringify(this.props.currentTaskListName)}
+            {JSON.stringify(this.props.currentTaskListName.name)}
             <span>
               <button className="button-small" onClick={this.renameClicked}>
                 Rename
@@ -117,11 +117,7 @@ class CurrentTaskListPage extends Component {
             </button>
           </p>
           {/* {this.showAddComponent ? <p>true</p> : <p>false</p>} */}
-          {
-            <p>
-              Current task list: {JSON.stringify(this.props.currentTaskList)}
-            </p>
-          }
+
           {this.props.currentTaskList.map((x, key) => (
             // <p key={key}>
             //   <b>{x.task_name}</b>--{x.task_description}
@@ -136,8 +132,8 @@ class CurrentTaskListPage extends Component {
             // </p>
             <TaskListItem thisItem={x}></TaskListItem>
           ))}
-          {/* <p>User data is {JSON.stringify(this.props.user)}</p>
-          <p>currentTaskList is {JSON.stringify(this.props.currentTaskList)}</p> */}
+          <p>User data is {JSON.stringify(this.props.user)}</p>
+          <p>currentTaskList is {JSON.stringify(this.props.currentTaskList)}</p>
         </div>
       </div>
     );
