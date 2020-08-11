@@ -13,12 +13,12 @@ class CurrentTaskListPage extends Component {
       if (prevProps.currentTaskList !== this.props.currentTaskList) {
         this.props.dispatch({
           type: "FETCH_LIST_BY_ID",
-          payload: this.props.currentTaskList[0].task_list_id,
+          payload: this.props.currentTaskListName.id,
         });
-        this.props.dispatch({
-          type: "FETCH_LIST_NAME_BY_ID",
-          payload: this.props.currentTaskList[0].task_list_id,
-        });
+        // this.props.dispatch({
+        //   type: "FETCH_LIST_NAME_BY_ID",
+        //   payload: this.props.currentTaskList[0].task_list_id,
+        // });
       }
     }
   }
