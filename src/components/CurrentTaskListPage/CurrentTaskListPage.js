@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 //import LogOutButton from "../LogOutButton/LogOutButton";
 import TaskListItem from "../TaskListItem/TaskListItem";
+import "./CurrentTaskListPage.css";
 
 class CurrentTaskListPage extends Component {
   componentDidMount() {
@@ -9,12 +10,16 @@ class CurrentTaskListPage extends Component {
   }
   componentDidUpdate(prevProps) {
     // if there are no tasks in the current list (it is new), do not try to retrieve tasks
-    if (typeof this.props.currentTaskListName.id !== 'undefined') {
+    if (typeof this.props.currentTaskListName.id !== "undefined") {
       if (prevProps.currentTaskList !== this.props.currentTaskList) {
         this.props.dispatch({
           type: "FETCH_LIST_BY_ID",
           payload: this.props.currentTaskListName.id,
         });
+        this.props.dispatch({
+          type: "FETCH_COLLABORATORS",
+          payload: 1,
+        });  
         // this.props.dispatch({
         //   type: "FETCH_LIST_NAME_BY_ID",
         //   payload: this.props.currentTaskList[0].task_list_id,
@@ -88,14 +93,14 @@ class CurrentTaskListPage extends Component {
       <div className="parent main-container">
         <div className="child-span-12">
           <h2>
-            {JSON.stringify(this.props.currentTaskListName.name)}
+            {this.props.currentTaskListName.name}
             <span>
               <button className="button-small" onClick={this.renameClicked}>
                 Rename
               </button>
             </span>
           </h2>
-
+          <p><div className="hr"></div></p>
           <h3>Add a new task:</h3>
           <p>
             Task Name:
@@ -116,6 +121,11 @@ class CurrentTaskListPage extends Component {
               Add task
             </button>
           </p>
+          <div className="hr"></div>
+          <p><h3>Collaborators:</h3></p>
+          <p>{this.props.collaborators.map((x, key) =>  
+            <span className="collaborator">{x.username}</span>
+          )}</p>
           {/* {this.showAddComponent ? <p>true</p> : <p>false</p>} */}
 
           {this.props.currentTaskList.map((x, key) => (
@@ -134,7 +144,11 @@ class CurrentTaskListPage extends Component {
           ))}
           <p>User data is {JSON.stringify(this.props.user)}</p>
           <p>currentTaskList is {JSON.stringify(this.props.currentTaskList)}</p>
-          <p>currentTaskListName is {JSON.stringify(this.props.currentTaskListName)}</p>
+          <p>
+            currentTaskListName is{" "}
+            {JSON.stringify(this.props.currentTaskListName)}
+          </p>
+          <p>collaborators is {JSON.stringify(this.props.collaborators)}</p>
         </div>
       </div>
     );
@@ -147,6 +161,7 @@ const mapStateToProps = (state) => ({
   allTaskLists: state.allTaskLists,
   currentTaskList: state.currentTaskList,
   currentTaskListName: state.currentTaskListName,
+  collaborators: state.collaborators,
 });
 
 // this allows us to use <App /> in index.js

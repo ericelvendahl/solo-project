@@ -5,6 +5,7 @@ import user from "./userReducer";
 import allTaskLists from "./allTaskListsReducer";
 import currentTaskList from "./currentTaskListReducer";
 import currentTaskListName from "./currentTaskListNameReducer";
+import collaborators from "./collaboratorsReducer"
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
 // This is imported in index.js as rootSaga
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   allTaskLists,
   currentTaskList,
   currentTaskListName,
+  collaborators,
 });
 
 export default rootReducer;

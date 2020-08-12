@@ -20,6 +20,25 @@ router.delete("/:id", rejectUnauthenticated, (req, res) => {
     });
 });
 
+// get all collaborators for a list by list id
+router.get("/collaborators/:id", rejectUnauthenticated, (req, res) => {
+  const queryText = `SELECT "user".username
+	FROM "user"
+		JOIN "user_task_list" ON "user".id = "user_task_list".user_id
+			JOIN "task_list" ON "task_list".id = "user_task_list".task_list_id
+			WHERE "task_list".id = ${req.params.id};`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      console.log("GET /api/task/collaborators successsful.");
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.log("Error in /api/task/collaborators is", err);
+      res.sendStatus(500);
+    });
+}); // end router.get "/collaborators/:id"
+
 // get all tasks from one list by id
 router.get("/list/:id", rejectUnauthenticated, (req, res) => {
   //   const username = req.body.username;

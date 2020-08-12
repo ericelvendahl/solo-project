@@ -5,6 +5,7 @@ function* taskSaga() {
   yield takeLatest("ADD_TASK", addTask);
   yield takeLatest("ADD_NEW_LIST", addNewList);
   yield takeLatest("DELETE_TASK", deleteTask);
+  yield takeLatest("FETCH_COLLABORATORS", fetchCollaborators);
   yield takeLatest("FETCH_ALL_TASK_LISTS", fetchAllTaskLists);
   yield takeLatest("FETCH_LIST_BY_ID", fetchListByID);
   yield takeLatest("FETCH_LIST_NAME_BY_ID", fetchListNameByID);
@@ -66,6 +67,18 @@ function* fetchAllTaskLists(action) {
   }
 } // end fetchAllTaskLists
 
+function* fetchCollaborators(action) {
+  console.log("in fetchCollaborators saga");
+  try {
+    const response = yield axios.get(
+      "/api/task/collaborators/" + action.payload
+    );
+    yield put({ type: "SET_COLLABORATORS", payload: response.data });
+  } catch (error) {
+    console.log("fetch collaborators GET failed with error:", error);
+  }
+}
+
 // fetches one task list by its ID
 function* fetchListByID(action) {
   console.log("in taskSaga fetchListByID. action.payload is", action.payload);
@@ -90,7 +103,7 @@ function* fetchListNameByID(action) {
     console.log("in taskSaga fetchListNameByID. response is", response);
     yield put({
       type: "SET_CURRENT_TASK_LIST_NAME",
-      payload: { name: response.data[0].task_list_name, id: action.payload }
+      payload: { name: response.data[0].task_list_name, id: action.payload },
     });
   } catch (error) {
     console.log("Get task list name by ID failed with error:", error);

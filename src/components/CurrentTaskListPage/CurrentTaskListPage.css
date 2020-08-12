@@ -1,5 +1,16 @@
 .main-container {
-    margin-right: 20%;
-    margin-left: 20%;
-  }
-  
+  margin-right: 20%;
+  margin-left: 20%;
+}
+
+.collaborator {
+  border: 1px solid black;
+  margin: .25em;
+  padding: .1em;
+}
+
+.hr {
+    height: 1px;
+    background-color: black;
+    width: 100%;
+}
