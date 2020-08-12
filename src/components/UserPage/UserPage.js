@@ -51,7 +51,7 @@ class UserPage extends Component {
     console.log("In linkClicked, thisId is", thisId);
     this.props.dispatch({ type: "FETCH_LIST_BY_ID", payload: thisId });
     this.props.dispatch({ type: "FETCH_LIST_NAME_BY_ID", payload: thisId });
-    this.props.history.push("/currenttasklist");
+    this.props.history.push(`/currenttasklist/${thisId}`);
   };
 
   render() {

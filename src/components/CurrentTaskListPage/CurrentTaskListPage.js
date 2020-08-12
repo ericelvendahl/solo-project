@@ -5,9 +5,7 @@ import TaskListItem from "../TaskListItem/TaskListItem";
 import "./CurrentTaskListPage.css";
 
 class CurrentTaskListPage extends Component {
-  componentDidMount() {
-
-  }
+  componentDidMount() {}
   componentDidUpdate(prevProps) {
     // if there are no tasks in the current list (it is new), do not try to retrieve tasks
     if (typeof this.props.currentTaskListName.id !== "undefined") {
@@ -18,8 +16,8 @@ class CurrentTaskListPage extends Component {
         });
         this.props.dispatch({
           type: "FETCH_COLLABORATORS",
-          payload: 1,
-        });  
+          payload: this.props.currentTaskListName.id,
+        });
         // this.props.dispatch({
         //   type: "FETCH_LIST_NAME_BY_ID",
         //   payload: this.props.currentTaskList[0].task_list_id,
@@ -93,16 +91,30 @@ class CurrentTaskListPage extends Component {
       <div className="parent main-container">
         <div className="child-span-12">
           <h2>
-            {this.props.currentTaskListName.name}
-            <span>
-              <button className="button-small" onClick={this.renameClicked}>
-                Rename
-              </button>
-            </span>
+            <p>
+              {this.props.currentTaskListName.name}
+              <span>
+                <button className="button-small" onClick={this.renameClicked}>
+                  Rename
+                </button>
+              </span>
+            </p>
           </h2>
-          <p><div className="hr"></div></p>
-          <h3>Add a new task:</h3>
           <p>
+            <div className="hr"></div>
+          </p>
+          <h3>Collaborators:</h3>
+
+          <p>
+            {this.props.collaborators.map((x, key) => (
+              <span className="collaborator">{x.username}</span>
+            ))}
+          </p>
+          <p>
+            <div className="hr"></div>
+          </p>
+          <h3>Add a new task:</h3>
+          <div>
             Task Name:
             <input
               type="text"
@@ -110,6 +122,7 @@ class CurrentTaskListPage extends Component {
               value={this.state.taskName}
               onChange={this.handleInputChangeFor("taskName")}
             />
+            <br />
             Description:
             <input
               type="text"
@@ -120,12 +133,9 @@ class CurrentTaskListPage extends Component {
             <button className="button-small" onClick={this.addClicked}>
               Add task
             </button>
-          </p>
+          </div>
           <div className="hr"></div>
-          <p><h3>Collaborators:</h3></p>
-          <p>{this.props.collaborators.map((x, key) =>  
-            <span className="collaborator">{x.username}</span>
-          )}</p>
+
           {/* {this.showAddComponent ? <p>true</p> : <p>false</p>} */}
 
           {this.props.currentTaskList.map((x, key) => (
