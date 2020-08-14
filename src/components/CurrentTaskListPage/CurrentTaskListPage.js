@@ -152,13 +152,14 @@ class CurrentTaskListPage extends Component {
             // </p>
             <TaskListItem thisItem={x}></TaskListItem>
           ))}
+          {/* reducer output for debugging:
           <p>User data is {JSON.stringify(this.props.user)}</p>
           <p>currentTaskList is {JSON.stringify(this.props.currentTaskList)}</p>
           <p>
             currentTaskListName is{" "}
             {JSON.stringify(this.props.currentTaskListName)}
           </p>
-          <p>collaborators is {JSON.stringify(this.props.collaborators)}</p>
+          <p>collaborators is {JSON.stringify(this.props.collaborators)}</p> */}
         </div>
       </div>
     );

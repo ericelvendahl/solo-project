@@ -84,6 +84,7 @@ class UserPage extends Component {
         <button className="button-small" onClick={this.addClicked}>
           Add
         </button>
+        {/* reducer output for debugging:
         <p>
           allTaskLists reducer is: {JSON.stringify(this.props.allTaskLists)}
         </p>
@@ -91,7 +92,7 @@ class UserPage extends Component {
         <p>
           Current task list data is {JSON.stringify(this.props.currentTaskList)}
         </p>
-        <p>newListName: {JSON.stringify(this.state.newListName)}</p>
+        <p>newListName: {JSON.stringify(this.state.newListName)}</p> */}
       </div>
     );
   }
