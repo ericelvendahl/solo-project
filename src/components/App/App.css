@@ -1,6 +1,7 @@
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
+  background-image: url("../../images/minimal2.jpg");
 }
 .button-small {
   background-color: #4b4b4b;
